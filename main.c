@@ -45,16 +45,15 @@ int child_process(char **argv, char **envp, int *fd)
 {
     int filein;
 	char	*command;
-    // char **cmd est le resultat du split de argv
+	char	*path_command;
 	command = create_cmd(argv, 2);
     // char *path a definir avec la fonction qui cherche le chemin
-    filein = open(argv[1], O_RDONLY);
+  
+	path_command = create_path(command, envp);
+	filein = open(argv[1], O_RDONLY);
     dup2(filein, 0);
     dup2(fd[1], 1);
-
-    execve(path, cmd, envp);
-    
-    
+    execve(path_command, command, envp);
 }
 
 char 	*create_cmd(char **argv, int i)
@@ -69,11 +68,14 @@ char 	*create_cmd(char **argv, int i)
 int second_child_process(char **argv, char **envp, int *fd)
 {
     int fileout;
+	char	*command;
+	char	*path_command;
 
+	command = create_cmd(argv, 3);
+	path_command = create_path(command, envp);
     fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC);
     dup2(fd[1], 0);
     dup2(fileout, 1);
-    
-    execve(path, cmd, envp);
+    execve(path_command, command, envp);
 }
 

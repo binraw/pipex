@@ -29,5 +29,7 @@
 
 
 int pipex_process(char **argv, char **envp, int fd);
+char    **get_env(char **env);
+char *create_path(char *cmd, char **env);
 
 #endif
