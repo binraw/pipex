@@ -24,8 +24,6 @@ RM = rm -Rf
 
 all: libft ${NAME}
 
-
-
 ${NAME}: ${OBJS} ${LIBFT}
 	$(CC) $(OBJS) $(LIBFT) -o $(NAME)
 
@@ -33,7 +31,6 @@ ${NAME}: ${OBJS} ${LIBFT}
 ${DIR_OBJ}%.o: %.c ${DIR_SRC}/pipex.h Makefile
 	mkdir -p $(shell dirname $@)
 	$(CC) ${CFLAGS} -c $< -o $@
-
 
 
 libft: 
