@@ -44,7 +44,9 @@ int pipex_process(char **argv, char ** envp, int *fd)
 int child_process(char **argv, char **envp, int *fd)
 {
     int filein;
+	char	*command;
     // char **cmd est le resultat du split de argv
+	command = create_cmd(argv, 2);
     // char *path a definir avec la fonction qui cherche le chemin
     filein = open(argv[1], O_RDONLY);
     dup2(filein, 0);
@@ -53,6 +55,15 @@ int child_process(char **argv, char **envp, int *fd)
     execve(path, cmd, envp);
     
     
+}
+
+char 	*create_cmd(char **argv, int i)
+{
+	char *cmd;
+
+	cmd = ft_split(argv[i], ' ');
+
+	return (cmd);
 }
 
 int second_child_process(char **argv, char **envp, int *fd)
