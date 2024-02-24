@@ -46,9 +46,8 @@ int child_process(char **argv, char **envp, int *fd)
     int filein;
 	char	**command;
 	char	*path_command;
-	command = create_cmd(argv, 2);
-    // char *path a definir avec la fonction qui cherche le chemin
-  
+	
+	command = create_cmd(argv, 2);  
 	path_command = create_path(command[0], envp);
 	filein = open(argv[1], O_RDONLY);
     dup2(filein, 0);
