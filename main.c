@@ -44,21 +44,21 @@ int pipex_process(char **argv, char ** envp, int *fd)
 int child_process(char **argv, char **envp, int *fd)
 {
     int filein;
-	char	*command;
+	char	**command;
 	char	*path_command;
 	command = create_cmd(argv, 2);
     // char *path a definir avec la fonction qui cherche le chemin
   
-	path_command = create_path(command, envp);
+	path_command = create_path(command[0], envp);
 	filein = open(argv[1], O_RDONLY);
     dup2(filein, 0);
     dup2(fd[1], 1);
     execve(path_command, command, envp);
 }
 
-char 	*create_cmd(char **argv, int i)
+char 	**create_cmd(char **argv, int i)
 {
-	char *cmd;
+	char **cmd;
 
 	cmd = ft_split(argv[i], ' ');
 
