@@ -1,7 +1,7 @@
 NAME = pipex
 
 
-SRCS_FILE = main.c utils.c get_next_line.c get_next_line_utils.c maap.c generate_img.c movement.c check_map.c end_game.c key.c
+SRCS_FILE = main.c utils.c 
 
 
 CC = cc
