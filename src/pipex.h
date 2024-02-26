@@ -25,7 +25,7 @@
 # include <fcntl.h> 
 # include <sys/types.h>
 # include <sys/wait.h>
-# include "lib/libft/libft.h"
+# include "../lib/libft/libft.h"
 
 
 
