@@ -25,12 +25,15 @@
 # include <fcntl.h> 
 # include <sys/types.h>
 # include <sys/wait.h>
-# include "lib/libft.h"
+# include "lib/libft/libft.h"
 
 
 
-int pipex_process(char **argv, char **envp, int fd);
-char    **get_env(char **env);
-char *create_path(char *cmd, char **env);
+int pipex_process(char **argv, char ** envp, int *fd);
+int child_process(char **argv, char **envp, int *fd);
+int second_child_process(char **argv, char **envp, int *fd);
+char 	**create_cmd(char **argv, int i);
+char    **get_env(char **envp)
+char *create_path(char *cmd, char **envp)
 
 #endif
