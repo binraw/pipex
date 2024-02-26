@@ -1,3 +1,5 @@
+#include "pipex.h"
+
 char    **get_env(char **envp)
 {
     char	**paths;
