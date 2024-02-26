@@ -68,7 +68,7 @@ int child_process(char **argv, char **envp, int *fd)
 	path_command = create_path(command[0], envp);
 	filein = open(argv[1], O_RDONLY);
     dup2(filein, 0);
-    // close(fd[1]);
+    close(fd[1]);
     dup2(fd[1], 1);
     execve(path_command, command, envp);
      return (0);
@@ -97,7 +97,7 @@ int second_child_process(char **argv, char **envp, int *fd)
         perror("open");
         exit(EXIT_FAILURE);
     }
-    // close(fd[0]); 
+    close(fd[0]); 
     dup2(fd[1], 0);
     dup2(fileout, 1);
     execve(path_command, command, envp);
