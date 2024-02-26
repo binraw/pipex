@@ -18,6 +18,7 @@ int main(int argc, char **argv, char **envp)
 
     if (argc == 5)
     {
+        pipe(fd);
         pipex_process(argv, envp, fd);
     }
     return (0);
@@ -30,6 +31,12 @@ int pipex_process(char **argv, char ** envp, int *fd)
     
     first_child = fork();
     second_child = fork();
+
+    if (first_child == -1)
+        {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
     
     if (first_child == 0)
         child_process(argv, envp, fd);
@@ -38,6 +45,7 @@ int pipex_process(char **argv, char ** envp, int *fd)
         second_child_process(argv, envp, fd);
 
     waitpid(first_child, NULL, 0);
+    waitpid(second_child, NULL, 0);
      return (0);
     
 }
@@ -48,6 +56,7 @@ int child_process(char **argv, char **envp, int *fd)
 	char	**command;
 	char	*path_command;
 	
+    close(fd[0]);
 	command = create_cmd(argv, 3);  
 	path_command = create_path(command[0], envp);
 	filein = open(argv[1], O_RDONLY);
