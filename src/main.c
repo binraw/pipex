@@ -30,7 +30,7 @@ int pipex_process(char **argv, char ** envp, int *fd)
     pid_t second_child;
     
     first_child = fork();
-    second_child = fork();
+   
 
     if (first_child == -1)
         {
@@ -40,6 +40,9 @@ int pipex_process(char **argv, char ** envp, int *fd)
     
     if (first_child == 0)
         child_process(argv, envp, fd);
+    
+
+     second_child = fork();
 
     if (second_child == 0)
         second_child_process(argv, envp, fd);
