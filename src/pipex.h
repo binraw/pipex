@@ -33,7 +33,8 @@ int pipex_process(char **argv, char ** envp, int *fd);
 int child_process(char **argv, char **envp, int *fd);
 int second_child_process(char **argv, char **envp, int *fd);
 char 	**create_cmd(char **argv, int i);
-char    **get_env(char **envp)
-char *create_path(char *cmd, char **envp)
+char    **get_env(char **envp);
+int main(int argc, char **argv, char **envp);
+char *create_path(char *cmd, char **envp);
 
 #endif
