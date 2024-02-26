@@ -43,13 +43,19 @@ int pipex_process(char **argv, char ** envp, int *fd)
     
 
      second_child = fork();
+     
+    if (second_child == -1)
+        {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
 
     if (second_child == 0)
         second_child_process(argv, envp, fd);
 
 
-    //  close(fd[0]); 
-    // close(fd[1]);
+     close(fd[0]); 
+    close(fd[1]);
 
     waitpid(first_child, NULL, 0);
     waitpid(second_child, NULL, 0);
