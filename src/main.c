@@ -28,6 +28,9 @@ int pipex_process(char **argv, char ** envp, int *fd)
 {
     pid_t first_child;
     pid_t second_child;
+    int  status;
+
+    status = 0;
     
     first_child = fork();
    
@@ -57,8 +60,8 @@ int pipex_process(char **argv, char ** envp, int *fd)
     close(fd[0]); 
     close(fd[1]);
 
-    waitpid(first_child, NULL, 0);
-    waitpid(second_child, NULL, 0);
+    waitpid(first_child, &status, 0);
+    waitpid(second_child, &status, 0);
      return (0);
     
 }
