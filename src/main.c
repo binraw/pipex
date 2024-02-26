@@ -92,7 +92,6 @@ int second_child_process(char **argv, char **envp, int *fd)
     }
     close(fd[0]); 
     dup2(fd[1], 0);
-    close(fd[1]);
     dup2(fileout, 1);
     execve(path_command, command, envp);
     return (0);
