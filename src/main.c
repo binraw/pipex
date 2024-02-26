@@ -69,12 +69,12 @@ char 	**create_cmd(char **argv, int i)
 int second_child_process(char **argv, char **envp, int *fd)
 {
     int fileout;
-	char	*command;
+	char	**command;
 	char	*path_command;
 
 	command = create_cmd(argv, 4);
 	path_command = create_path(command, envp);
-    fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC);
+    fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
     dup2(fd[1], 0);
     dup2(fileout, 1);
     execve(path_command, command, envp);
