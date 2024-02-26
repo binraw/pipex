@@ -39,7 +39,6 @@ char *create_path(char *cmd, char **envp)
     }
     free(paths);
     return (NULL);
-
 }
 
 

@@ -26,40 +26,29 @@ int main(int argc, char **argv, char **envp)
 
 int pipex_process(char **argv, char ** envp, int *fd)
 {
-    pid_t first_child;
-    pid_t second_child;
-    int  status;
+    pid_t   first_child;
+    pid_t   second_child;
+    int     status;
 
     status = 0;
-    
     first_child = fork();
-   
-
     if (first_child == -1)
         {
             perror("fork");
             exit(EXIT_FAILURE);
         }
-    
     if (first_child == 0)
         child_process(argv, envp, fd);
-    
-
-     second_child = fork();
-     
+    second_child = fork();
     if (second_child == -1)
         {
             perror("fork");
             exit(EXIT_FAILURE);
         }
-
     if (second_child == 0)
         second_child_process(argv, envp, fd);
-
-
     close(fd[0]); 
     close(fd[1]);
-
     waitpid(first_child, &status, 0);
     waitpid(second_child, &status, 0);
      return (0);
@@ -73,17 +62,15 @@ int child_process(char **argv, char **envp, int *fd)
 	char	*path_command;
 	
     close(fd[0]);
-	command = create_cmd(argv, 2); 
-    
+	command = create_cmd(argv, 2);
 	path_command = create_path(command[0], envp);
 	filein = open(argv[1], O_RDONLY);
     dup2(filein, STDIN_FILENO);
     dup2(fd[1], STDOUT_FILENO);
     close(filein);
-    
     close(fd[1]);
     execve(path_command, command, envp);
-     return (0);
+    return (0);
 }
 
 char 	**create_cmd(char **argv, int i)
@@ -91,17 +78,16 @@ char 	**create_cmd(char **argv, int i)
 	char **cmd;
 
 	cmd = ft_split(argv[i], ' ');
-
 	return (cmd);
 }
 
 int second_child_process(char **argv, char **envp, int *fd)
 {
-    int fileout;
+    int     fileout;
 	char	**command;
 	char	*path_command;
 
-close(fd[1]);
+    close(fd[1]);
 	command = create_cmd(argv, 3);
 	path_command = create_path(command[0], envp);
     fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
@@ -110,12 +96,10 @@ close(fd[1]);
         perror("open");
         exit(EXIT_FAILURE);
     }
-   
     dup2(fd[1], STDIN_FILENO);
     dup2(fileout, STDOUT_FILENO);
     close(fileout);
     close(fd[0]); 
-    
     execve(path_command, command, envp);
     return (0);
 }
