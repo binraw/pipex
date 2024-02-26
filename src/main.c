@@ -84,7 +84,7 @@ int second_child_process(char **argv, char **envp, int *fd)
 
 	command = create_cmd(argv, 4);
 	path_command = create_path(command[0], envp);
-    fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+    fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (fileout == -1)
     {
         perror("open");
