@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:18:58 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/02/22 15:40:40 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/02/27 10:07:58 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int child_process(char **argv, char **envp, int *fd)
 	char	**command;
 	char	*path_command;
 	
-    close(fd[0]);
+    
 	command = create_cmd(argv, 2);
 	path_command = create_path(command[0], envp);
 	filein = open(argv[1], O_RDONLY);
@@ -69,6 +69,7 @@ int child_process(char **argv, char **envp, int *fd)
     dup2(fd[1], STDOUT_FILENO);
     close(filein);
     close(fd[1]);
+    close(fd[0]);
     execve(path_command, command, envp);
     return (0);
 }
@@ -87,7 +88,7 @@ int second_child_process(char **argv, char **envp, int *fd)
 	char	**command;
 	char	*path_command;
 
-    close(fd[1]);
+    
 	command = create_cmd(argv, 3);
 	path_command = create_path(command[0], envp);
     fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
@@ -96,10 +97,11 @@ int second_child_process(char **argv, char **envp, int *fd)
         perror("open");
         exit(EXIT_FAILURE);
     }
-    dup2(fd[1], STDIN_FILENO);
+    dup2(fd[0], STDIN_FILENO);
     dup2(fileout, STDOUT_FILENO);
     close(fileout);
-    close(fd[0]); 
+    close(fd[0]);
+    close(fd[1]);
     execve(path_command, command, envp);
     return (0);
 }
