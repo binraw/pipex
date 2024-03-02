@@ -37,5 +37,6 @@ char 	**create_cmd(char **argv, int i);
 char    **get_env(char **envp);
 int main(int argc, char **argv, char **envp);
 char *create_path(char *cmd, char **envp);
+void error_pipe(int error);
 
 #endif
