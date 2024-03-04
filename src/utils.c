@@ -9,6 +9,11 @@ char    **get_env(char **envp)
 	while (!ft_strnstr(envp[i], "PATH", 4))
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
+    if (!paths)
+    {
+        ft_free_tab(envp);
+        return (NULL);
+    }
 	return (paths);
 }
 
@@ -28,7 +33,7 @@ char *create_path(char *cmd, char **envp)
         free(join_path_cmd);
         if (access(path_cmd, X_OK) == 0)
         {
-            free(paths);
+            ft_free_tab(paths);
             return (path_cmd);
         }
         else
@@ -37,8 +42,21 @@ char *create_path(char *cmd, char **envp)
             i++ ;
         }
     }
-    free(paths);
+    ft_free_tab(paths);
+    free(cmd);
     return (NULL);
 }
 
+void    ft_free_tab(char  **tab)
+{
+    size_t i;
+    i = 0;
+
+    while(tab[i])
+    {
+        free(tab[i]);
+        i++;
+    }
+    free(tab);
+}
 

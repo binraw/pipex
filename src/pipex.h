@@ -38,5 +38,6 @@ char    **get_env(char **envp);
 int main(int argc, char **argv, char **envp);
 char *create_path(char *cmd, char **envp);
 void error_pipe(int error);
+void    ft_free_tab(char  **tab);
 
 #endif
