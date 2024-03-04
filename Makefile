@@ -1,7 +1,7 @@
 NAME = pipex
 
 
-SRCS_FILE = main.c utils.c 
+SRCS_FILE = main.c utils.c error.c
 
 
 CC = cc

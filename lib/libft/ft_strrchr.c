@@ -21,7 +21,7 @@ char	*ft_strrchr(const char *string, int searchedChar)
 	p = (char *)string;
 	search = (char) searchedChar;
 	i = ft_strlen(p);
-	while (i >= 0)
+	while (i > 0)
 	{
 		if (p[i] == search)
 		{

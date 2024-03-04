@@ -11,5 +11,5 @@ void error_pipe(int error)
     else 
      return ;
 
-    exit(EXIT_FAILLURE);
+    exit(EXIT_FAILURE);
 }
