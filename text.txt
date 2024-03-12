@@ -1,4 +1,8 @@
-georkeorjeojr
-uerhuerhu
-eihguehgu
-ghuehg
+geo.txt
+lib
+Makefile
+nub.txt
+pipex
+README.md
+src
+text.txt

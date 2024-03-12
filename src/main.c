@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:18:58 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/02/27 10:07:58 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:42:54 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int child_process(char **argv, char **envp, int *fd)
         free(command);
         error_pipe(3);
     }
-     
 	filein = open(argv[1], O_RDONLY);
     if (filein == -1)
       {
@@ -90,8 +89,8 @@ char 	**create_cmd(char **argv, int i)
 	char **cmd;
 
 	cmd = ft_split(argv[i], ' ');
-    if  (!cmd)
-        ft_free_tab(cmd);
+	if  (!cmd)
+		free(cmd);
 	return (cmd);
 }
 
@@ -109,11 +108,10 @@ int second_child_process(char **argv, char **envp, int *fd)
         free(command);
         error_pipe(3);
        }
-    error_pipe(3);
     fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (fileout == -1)
     {
-        free(command);
+        ft_free_tab(command);
         error_pipe(1);
     }   
     if (fileout == -1)
