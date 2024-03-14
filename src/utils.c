@@ -18,7 +18,7 @@ char    **get_env(char **envp)
 	int		i;
 
 	i = 0;
-	while (!ft_strnstr(envp[i], "PATH", 4))
+	while (!ft_strnstr(envp[i], "PATH", 4) && envp[i])
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
     if (!paths)
@@ -38,22 +38,10 @@ char *create_path(char *cmd, char **envp)
 
     i = 0;
       if (access(cmd, F_OK) == 0)
-        {
-            // ft_free_tab(paths);
             return (cmd);
-        }
     paths = get_env(envp);
-    // printf("%s\n", paths[0]);
     if (!paths)
-    {
-        // essai de mettre directement le chemin command
-         if (access(cmd, X_OK) == 0)
-        {
-            // ft_free_tab(paths);
-            return (cmd);
-        }
         return (NULL);
-    }
     while (paths[i])
     {
         join_path_cmd = ft_strjoin(paths[i], "/");
@@ -74,6 +62,7 @@ char *create_path(char *cmd, char **envp)
     free(cmd);
     return (NULL);
 }
+
 
 void    ft_free_tab(char  **tab)
 {

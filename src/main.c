@@ -20,6 +20,8 @@ int main(int argc, char **argv, char **envp)
     {
         pipe(fd);
         pipex_process(argv, envp, fd);
+		close(fd[0]);
+		close(fd[1]);
     }
     return (0);
 }
@@ -46,18 +48,24 @@ int pipex_process(char **argv, char ** envp, int *fd)
             exit(EXIT_FAILURE);
         }
     if (second_child == 0)
-        second_child_process(argv, envp, fd);
-    close(fd[0]); 
-    close(fd[1]);
+	{
+		second_child_process(argv, envp, fd);
+	}
+	
+	close(fd[0]); 
+	close(fd[1]);
     waitpid(first_child, &status, 0);
     waitpid(second_child, &status, 0);
+    
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
      return (0);
     
 }
 
 int child_process(char **argv, char **envp, int *fd)
 {
-    int filein;
+    int		filein;
 	char	**command;
 	char	*path_command;
 	
@@ -66,14 +74,17 @@ int child_process(char **argv, char **envp, int *fd)
 	path_command = create_path(command[0], envp);
     if (!path_command)
     {
-        free(command);
+        ft_free_tab(command);
         error_pipe(3);
+		return (-1);
     }
 	filein = open(argv[1], O_RDONLY);
     if (filein == -1)
       {
-        free(command);
+        ft_free_tab(command);
+        free(path_command);
         error_pipe(2);
+		return (-1);
     }
     dup2(filein, STDIN_FILENO);
     dup2(fd[1], STDOUT_FILENO);
@@ -86,11 +97,21 @@ int child_process(char **argv, char **envp, int *fd)
 
 char 	**create_cmd(char **argv, int i)
 {
-	char **cmd;
+	char	**cmd;
+    int		index;
 
+	index = 0;
 	cmd = ft_split(argv[i], ' ');
 	if  (!cmd)
-		free(cmd);
+	{
+		while (cmd[index] != NULL)
+		{
+			free(cmd[index]);
+			index++;
+		}
+
+        free(cmd);
+	}
 	return (cmd);
 }
 
@@ -112,10 +133,13 @@ int second_child_process(char **argv, char **envp, int *fd)
     if (fileout == -1)
     {
         ft_free_tab(command);
-        error_pipe(1);
+        error_pipe(2);
+        exit(1); // exit du truc principale avec ce code
     }   
     if (fileout == -1)
     {
+		free(command);
+        free(path_command);
         perror("open");
         exit(EXIT_FAILURE);
     }

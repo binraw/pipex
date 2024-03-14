@@ -23,3 +23,10 @@ commande pas bonne
 si jarrive a trouver le path ou pas 
 le fichier in n'existe pas ou j'ai pas les droits
 return les bon messages d'erreur et code  
+
+
+regarder fd encore ouvert
+quand y a une erreur 
+
+mettre le bon message d'erreur a chaque fois
+renvoyer le bon code erreur 

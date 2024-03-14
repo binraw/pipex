@@ -2,6 +2,9 @@ geo.txt
 lib
 Makefile
 nub.txt
+outfile
+outfile.txt
+outt
 pipex
 README.md
 src
