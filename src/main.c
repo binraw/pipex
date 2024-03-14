@@ -15,13 +15,20 @@
 int main(int argc, char **argv, char **envp)
 {
     int fd[2];
+	int	control;
+
+	control = 0;
 
     if (argc == 5)
     {
         pipe(fd);
-        pipex_process(argv, envp, fd);
+        control = pipex_process(argv, envp, fd);
 		close(fd[0]);
 		close(fd[1]);
+		if (control == -1)
+			exit(1);
+		else if (control == -2)
+			exit(127);
     }
     return (0);
 }
@@ -68,15 +75,14 @@ int child_process(char **argv, char **envp, int *fd)
     int		filein;
 	char	**command;
 	char	*path_command;
-	
-    
+
 	command = create_cmd(argv, 2);
 	path_command = create_path(command[0], envp);
     if (!path_command)
     {
         ft_free_tab(command);
         error_pipe(3);
-		return (-1);
+		return (-2);
     }
 	filein = open(argv[1], O_RDONLY);
     if (filein == -1)
@@ -109,7 +115,6 @@ char 	**create_cmd(char **argv, int i)
 			free(cmd[index]);
 			index++;
 		}
-
         free(cmd);
 	}
 	return (cmd);
@@ -121,28 +126,29 @@ int second_child_process(char **argv, char **envp, int *fd)
 	char	**command;
 	char	*path_command;
 
-    
 	command = create_cmd(argv, 3);
 	path_command = create_path(command[0], envp);
-       if (!path_command)
-       {
-        free(command);
+    if (!path_command)
+    {
+    	ft_free_tab(command);
         error_pipe(3);
-       }
+		return (-2);
+    }
     fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (fileout == -1)
     {
         ft_free_tab(command);
+		 free(path_command);
         error_pipe(2);
-        exit(1); // exit du truc principale avec ce code
+        return (-1); // exit du truc principale avec ce code
     }   
-    if (fileout == -1)
-    {
-		free(command);
-        free(path_command);
-        perror("open");
-        exit(EXIT_FAILURE);
-    }
+    // if (fileout == -1)
+    // {
+	// 	ft_free_tab(command);
+    //     free(path_command);
+    //     perror("open");
+    //     exit(EXIT_FAILURE);
+    // }
     dup2(fd[0], STDIN_FILENO);
     dup2(fileout, STDOUT_FILENO);
     close(fileout);
