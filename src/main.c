@@ -25,12 +25,12 @@ int main(int argc, char **argv, char **envp)
         control = pipex_process(argv, envp, fd);
 		close(fd[0]);
 		close(fd[1]);
-		if (control == -1)
-			exit(1);
-		else if (control == -2)
-			exit(127);
+		// if (control == 1)
+		// 	exit(1);
+		// else if (control == -2)
+		// 	exit(127);
     }
-    return (0);
+    return (control);
 }
 
 int pipex_process(char **argv, char ** envp, int *fd)
@@ -41,21 +41,13 @@ int pipex_process(char **argv, char ** envp, int *fd)
 
     status = 0;
     first_child = fork();
-    if (first_child != 0)
-        {
-              if (first_child == -2)
-				return (-2);
+    if (first_child == -1)
 			return (-1);
-        }
     if (first_child == 0)
         child_process(argv, envp, fd);
     second_child = fork();
-    if (second_child != 0)
-        {
-            if (second_child == -2)
-				return (-2);
+    if (second_child == -1)
 			return (-1);
-        }
     if (second_child == 0)
 	{
 		second_child_process(argv, envp, fd);
@@ -64,11 +56,9 @@ int pipex_process(char **argv, char ** envp, int *fd)
 	close(fd[1]);
     waitpid(first_child, &status, 0);
     waitpid(second_child, &status, 0);
-	if (first_child != 0 || second_child != 0)
-		return (-1);
-    
-	// if (WIFEXITED(status))
-	// 	return (WEXITSTATUS(status));
+    if (WIFEXITED(status))
+        return (WEXITSTATUS(status));
+
      return (0);
 }
 
@@ -78,12 +68,14 @@ int child_process(char **argv, char **envp, int *fd)
 	char	**command;
 	char	*path_command;
 
+    path_command = NULL;
 	command = create_cmd(argv, 2);
 	if (command)
 		path_command = create_path(command[0], envp);
     if (!path_command)
     {
-        free(command);
+        if(command)
+            free(command);
         error_pipe(3);
 		return (-2);
     }
@@ -102,6 +94,8 @@ int child_process(char **argv, char **envp, int *fd)
     close(fd[1]);
     close(fd[0]);
     execve(path_command, command, envp);
+    perror("execve");
+    exit(127);
     return (0);
 }
 
@@ -109,9 +103,24 @@ char 	**create_cmd(char **argv, int i)
 {
 	char	**cmd;
     int		index;
+    int y;
 
 	index = 0;
+    y = 0;
+    while (argv[i][y] == ' ')
+    {
+        if (argv[i][y + 1] == '\0')
+        {
+            return (NULL);
+        }
+        y++;
+    }
 	cmd = ft_split(argv[i], ' ');
+    // if (!cmd && argv[i])
+    // {
+    //     if (ft_strlen(argv[i]) > 0)
+    //         cmd[0] = argv[i];
+    // }
 	if  (!cmd)
 	{
 		while (cmd[index] != NULL)
@@ -130,14 +139,16 @@ int second_child_process(char **argv, char **envp, int *fd)
 	char	**command;
 	char	*path_command;
 
+    path_command = NULL;
 	command = create_cmd(argv, 3);
-	path_command = create_path(command[0], envp);
+    if (command)
+	    path_command = create_path(command[0], envp);
     if (!path_command)
     {
-		
-    	free(command);
+		if (command)
+    	    free(command);
         error_pipe(3);
-		return (-2);
+		exit(127);
     }
     fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (fileout == -1)
@@ -146,7 +157,7 @@ int second_child_process(char **argv, char **envp, int *fd)
         	ft_free_tab(command);
 		free(path_command);
         error_pipe(2);
-        return (-1);
+        exit(EXIT_FAILURE);
     }
     dup2(fd[0], STDIN_FILENO);
     dup2(fileout, STDOUT_FILENO);
@@ -154,6 +165,8 @@ int second_child_process(char **argv, char **envp, int *fd)
     close(fd[0]);
     close(fd[1]);
     execve(path_command, command, envp);
+    perror("execve");
+    exit(127);
     return (0);
 }
 
