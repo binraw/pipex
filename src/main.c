@@ -25,10 +25,6 @@ int main(int argc, char **argv, char **envp)
         control = pipex_process(argv, envp, fd);
 		close(fd[0]);
 		close(fd[1]);
-		// if (control == 1)
-		// 	exit(1);
-		// else if (control == -2)
-		// 	exit(127);
     }
     return (control);
 }
@@ -107,6 +103,8 @@ char 	**create_cmd(char **argv, int i)
 
 	index = 0;
     y = 0;
+    if (argv[i][y] == '\0')
+        return (NULL);
     while (argv[i][y] == ' ')
     {
         if (argv[i][y + 1] == '\0')
