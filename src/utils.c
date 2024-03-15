@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:39:33 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/03/15 15:27:52 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:37:20 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ char	*create_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-void	ft_free_tab(char  **tab)
+void	ft_free_tab(char **tab)
 {
 	size_t	i;
 
-    i = 0;
+	i = 0;
 	while (tab[i])
 	{
 		free(tab[i]);
@@ -69,4 +69,3 @@ void	ft_free_tab(char  **tab)
 	}
 	free(tab);
 }
-

@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:39:42 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/03/15 15:29:27 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:36:46 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	error_pipe(int error)
 		write(2, "permission denied\n", 19);
 	else if (error == 3)
 		write(2, "command not found\n", 18);
-	else 
+	else
 		return ;
 }
+
 void	error_file(char **command, char *path_command)
 {
 	if (command)

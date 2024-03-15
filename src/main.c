@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:18:58 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/03/15 15:33:21 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:38:26 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	return (control);
 }
 
-int	pipex_process(char **argv, char ** envp, int *fd)
+int	pipex_process(char **argv, char **envp, int *fd)
 {
 	pid_t	first_child;
 	pid_t	second_child;
@@ -45,13 +45,13 @@ int	pipex_process(char **argv, char ** envp, int *fd)
 		return (-1);
 	if (second_child == 0)
 		second_child_process(argv, envp, fd);
-	close(fd[0]); 
+	close(fd[0]);
 	close(fd[1]);
 	waitpid(first_child, &status, 0);
 	waitpid(second_child, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
-     return (0);
+	return (0);
 }
 
 int	child_process(char **argv, char **envp, int *fd)
@@ -80,7 +80,6 @@ int	child_process(char **argv, char **envp, int *fd)
 	return (0);
 }
 
-
 char	**create_cmd(char **argv, int i)
 {
 	char	**cmd;
@@ -98,21 +97,21 @@ char	**create_cmd(char **argv, int i)
 		y++;
 	}
 	cmd = ft_split(argv[i], ' ');
-	if  (!cmd)
+	if (!cmd)
 	{
 		while (cmd[index] != NULL)
 		{
 			free(cmd[index]);
 			index++;
 		}
-    	free(cmd);
+		free(cmd);
 	}
 	return (cmd);
 }
 
 int	second_child_process(char **argv, char **envp, int *fd)
 {
-    int		fileout;
+	int		fileout;
 	char	**command;
 	char	*path_command;
 
