@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:18:58 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/03/15 15:38:26 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:35:50 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,8 @@ int	child_process(char **argv, char **envp, int *fd)
 char	**create_cmd(char **argv, int i)
 {
 	char	**cmd;
-	int		index;
 	int		y;
 
-	index = 0;
 	y = 0;
 	if (argv[i][y] == '\0')
 		return (NULL);
@@ -97,15 +95,6 @@ char	**create_cmd(char **argv, int i)
 		y++;
 	}
 	cmd = ft_split(argv[i], ' ');
-	if (!cmd)
-	{
-		while (cmd[index] != NULL)
-		{
-			free(cmd[index]);
-			index++;
-		}
-		free(cmd);
-	}
 	return (cmd);
 }
 
