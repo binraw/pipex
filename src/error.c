@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:39:42 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/03/19 15:16:15 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:21:00 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ void	error_pipe(int error, int i, char **argv)
 	{
 		ft_putstr_fd(argv[i], 2);
 		write(2, " : permission denied\n", 22);
-	}	
-		
+	}
 	else if (error == 3)
 	{
 		ft_putstr_fd(argv[i], 2);
 		write(2, " : command not found\n", 22);
 	}
-		
 	else
 		return ;
 }
