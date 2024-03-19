@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:18:58 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/03/18 15:35:50 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:17:49 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ int	child_process(char **argv, char **envp, int *fd)
 	if (command)
 		path_command = create_path(command[0], envp);
 	if (!path_command)
-		return (error_path(command), -2);
+		return (error_path(command, 2, argv), -2);
 	filein = open(argv[1], O_RDONLY);
 	if (filein == -1)
-		return (error_file(command, path_command), -1);
+		return (error_file(command, path_command, 1, argv), -1);
 	dup2(filein, STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close(filein);
@@ -109,10 +109,10 @@ int	second_child_process(char **argv, char **envp, int *fd)
 	if (command)
 		path_command = create_path(command[0], envp);
 	if (!path_command)
-		error_path(command);
+		error_path(command, 3, argv);
 	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fileout == -1)
-		error_file(command, path_command);
+		error_file(command, path_command , 4, argv);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fileout, STDOUT_FILENO);
 	close(fileout);
