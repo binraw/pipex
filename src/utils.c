@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:39:33 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/03/18 15:39:27 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/20 12:19:08 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ char	**get_env(char **envp)
 	int		i;
 
 	i = 0;
-	while (!ft_strnstr(envp[i], "PATH", 4) && envp[i])
+	while (!ft_strnstr(envp[i], "PATH", 4) && i < 50)
 		i++;
+	if (i == 50)
+		return (NULL);
 	paths = ft_split(envp[i] + 5, ':');
 	return (paths);
 }

@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:55:12 by rtruvelo          #+#    #+#             */
-/*   Updated: 2023/11/20 13:25:26 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:01:38 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,3 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 	}
 	return (NULL);
 }
-
-// int main(void)
-// {
-// 	printf("%s\n", ft_strnstr("MZIRIBMZIRIBMZE123", "MZIRIBMZE", 9));
-// }
