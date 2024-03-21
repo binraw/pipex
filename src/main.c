@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:18:58 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/03/19 15:20:39 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:24:06 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	second_child_process(char **argv, char **envp, int *fd)
 		error_path(command, 3, argv);
 	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fileout == -1)
-		error_file(command, path_command, 4, argv);
+		return (open_error_file(command, path_command, 4, argv), -1);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fileout, STDOUT_FILENO);
 	close(fileout);

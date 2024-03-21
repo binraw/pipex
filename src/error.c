@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:39:42 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/03/19 15:21:00 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:12:22 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,17 @@ void	error_file(char **command, char *path_command, int i, char **argv)
 {
 	if (command)
 		ft_free_tab(command);
+	free(path_command);
+	error_pipe(2, i, argv);
+	exit(1);
+}
+
+void	open_error_file(char **command, char *path_command, int i, char **argv)
+{
+	if (command && command[0][1] != 'b')
+		ft_free_tab(command);
+	else
+		free(command);
 	free(path_command);
 	error_pipe(2, i, argv);
 	exit(1);

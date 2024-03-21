@@ -6,7 +6,7 @@
 /*   By: rtruvelo <rtruvelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:34:28 by rtruvelo          #+#    #+#             */
-/*   Updated: 2024/03/19 15:12:13 by rtruvelo         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:23:56 by rtruvelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void	error_pipe(int error, int i, char **argv);
 void	ft_free_tab(char **tab);
 void	error_file(char **command, char *path_command, int i, char **argv);
 void	error_path(char **command, int i, char **argv);
+void	open_error_file(char **command, char *path_command, int i, char **argv);
 
 #endif

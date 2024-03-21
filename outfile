@@ -28,7 +28,7 @@ ${NAME}: ${OBJS} ${LIBFT}
 	$(CC) $(OBJS) $(LIBFT) -o $(NAME)
 
 
-${DIR_OBJ}%.o: %.c ${DIR_SRC}/pipex.h Makefile
+${DIR_OBJ}%.o: %.c ${DIR_SRC}/pipex.h Makefile ${LIBFT}
 	mkdir -p $(shell dirname $@)
 	$(CC) ${CFLAGS} -c $< -o $@
 
